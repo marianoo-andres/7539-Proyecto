@@ -1,0 +1,26 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "marianoandres.hello"
+    },
+    "cordova-plugin-advanced-http": {
+      "PACKAGE_NAME": "marianoandres.hello"
+    },
+    "pdf417-cordova": {
+      "CAMERA_USAGE_DESCRIPTION": " ",
+      "PACKAGE_NAME": "marianoandres.hello"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "marianoandres.hello"
+    }
+  }
+}

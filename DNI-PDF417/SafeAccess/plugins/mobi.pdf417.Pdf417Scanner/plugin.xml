@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="mobi.pdf417.Pdf417Scanner"
+    version="7.0.1-0">
+
+    <name>Pdf417Scanner</name>
+    <description>A small and powerful PDF417 barcode scanning library</description>
+    <license>Commercial</license>
+    <keywords>pdf417,barcode,usdl,qr code,2d barcode,1d barcode</keywords>
+    <author>MicroBlink Team info@microblink.com</author>
+
+    <engines>
+        <engine name="cordova" version=">=7.0.0" />
+        <engine name="cordova-android" version=">=7.0.0" />
+    </engines>    
+
+    <js-module src="www/pdf417scanner.js" name="Pdf417Scanner">
+        <clobbers target="cordova.plugins.pdf417Scanner" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Pdf417Scanner">
+                <param name="android-package" value="com.phonegap.plugins.pdf417.Pdf417Scanner" />
+            </feature>
+        </config-file>
+
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.FLASHLIGHT" />
+            
+            <uses-feature android:name="android.hardware.camera" />
+            <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+            <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+
+            <supports-screens
+                android:anyDensity="true"
+                android:largeScreens="true"
+                android:normalScreens="true"
+                android:resizeable="true"
+                android:smallScreens="true" />
+        </config-file>
+
+        <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                    android:name="com.microblink.activity.BarcodeScanActivity"
+                    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                    android:configChanges="orientation|screenSize"
+                    android:screenOrientation="portrait" >
+            </activity>
+        </config-file>
+
+        <source-file src="src/android/java/com/phonegap/plugins/pdf417/Pdf417Scanner.java" target-dir="app/src/main/java/com/phonegap/plugins/pdf417" />
+        <source-file src="src/android/java/com/phonegap/plugins/pdf417/FakeR.java" target-dir="app/src/main/java/com/phonegap/plugins/pdf417" />
+        
+        <source-file src="src/android/res/raw/beep.mp3" target-dir="app/src/main/res/raw" />
+
+        <framework src="src/android/libPdf417Mobi.gradle" custom="true" type="gradleReference" />
+        
+    </platform>
+
+    <hook type="after_platform_add" src="scripts/addEmbedded.js"/>
+
+    <platform name="ios">
+        <source-file src="src/ios/sources/CDVpdf417.m" />
+        <header-file src="src/ios/sources/CDVpdf417.h" />
+
+        <framework src="libc++.dylib" />
+        <framework src="libz.dylib" />
+        <framework src="libiconv.dylib" />
+
+        <framework src="CoreVideo.framework" />
+        <framework src="CoreText.framework" />
+        <framework src="CoreMedia.framework" />
+        <framework src="QuartzCore.framework" />
+        <framework src="AudioToolbox.framework" />
+        <framework src="OpenGLES.framework" />
+        <framework src="Accelerate.framework" />
+
+        <framework src="src/ios/MicroBlink.framework" custom="true" embed="true" />
+
+        <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>$CAMERA_USAGE_DESCRIPTION</string>
+        </config-file>
+
+        <resource-file src="src/ios/MicroBlink.bundle" />
+        
+        <config-file target="config.xml" parent="/*">
+            <feature name="Pdf417Scanner">
+                <param name="ios-package" value="CDVpdf417" />
+            </feature>
+        </config-file>
+
+        <hook type="before_platform_add" src="scripts/initIOSFramework.sh"/>
+    </platform>
+</plugin>
